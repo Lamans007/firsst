@@ -1,0 +1,47 @@
+﻿@page "{id}"
+@model CalendarApp.Pages.EditModel
+
+
+<h2>@Model.DayToEdit.Flag</h2>
+<h3>My Activities</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Activities[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activities[0].Details)
+            </th>
+            <th>
+                Time
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Activities ?? Enumerable.Empty<Activity>())
+        {
+            @if (Model.DayToEdit.CurrentDate.Date.ToString("dd MMM yyyy") == c.TimeAt.Date.ToString("dd MMM yyyy"))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => c.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => c.Details)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => c.TimeAt.TimeOfDay)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-page="/Shared/EditActivity" asp-route-id="@c.ID">Edit</a> |
+                        <a class="btn btn-secondary" asp-page="/Shared/DeleteActivity" asp-route-id="@c.ID">Delete</a>
+                    </td>
+                </tr>
+                }
+            }
+    </tbody>
+</table>

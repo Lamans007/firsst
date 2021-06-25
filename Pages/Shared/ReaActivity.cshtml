@@ -1,0 +1,45 @@
+﻿@page
+@model CalendarApp.Pages.Shared.ReaActivityModel
+
+@{
+    ViewData["Title"] = "ReaActivity";
+}
+
+<h3>Activities for today</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].Details)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity[0].TimeAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Activity) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeAt)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,90 @@
+﻿@page "{nxt?}"
+@model CalendarApp.Pages.IndexModel
+@{
+}
+<div class="container ">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    @for (int i = 0; i < Model.Months.Count; i++)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active btn" aria-current="page" asp-for="/Index" asp-route-nxt=@i>@Model.Months[i]</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-8">
+            @for (int i = 0; i < Model.CurrentDays.Count; i++)
+            {
+                @if (i % 7 == 0)
+                {
+                    <ul class="list-group list-group-horizontal">
+                        @for (int j = 0; j < 7; j++)
+                        {
+                            @if (i + j < Model.CurrentDays.Count)
+                            {
+                        <li class="list-group-item px-lg-6">
+                                <h6>@Model.CurrentDays[i + j].Flag</h6>
+                            
+                            <p>@Model.CurrentDays[i + j].CurrentDate.DayOfWeek</p>
+                            <a asp-page="/Edit" asp-route-id="@Model.CurrentDays[i+j].ID">@Model.CurrentDays[i + j].CurrentDate.ToString("dd MMMM")</a>
+                        </li>
+                            }
+                        }
+                    </ul>
+                }
+
+            }
+        </div>
+        <div class="col-4" >
+            <h4>Activity</h4>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Activity.Title" class="control-label"></label>
+                            <input asp-for="Activity.Title" class="form-control" />
+                            <span asp-validation-for="Activity.Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Activity.Details" class="control-label"></label>
+                            <input asp-for="Activity.Details" class="form-control" />
+                            <span asp-validation-for="Activity.Details" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Activity.TimeAt" class="control-label"></label>
+                            <input asp-for="Activity.TimeAt" class="form-control" />
+                            <span asp-validation-for="Activity.TimeAt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+    </div>
+
+
+
+
+
+
+
+
+</div>
